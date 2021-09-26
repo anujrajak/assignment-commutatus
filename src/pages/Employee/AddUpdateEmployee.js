@@ -41,7 +41,7 @@ const AddUpdateEmployee = () => {
     if (updateAction) {
       updateEmployeeInfo(emp);
     } else {
-      const result = saveEmployee("employees", emp);
+      saveEmployee("employees", emp);
     }
     history.push("/employee");
   };
