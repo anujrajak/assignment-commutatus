@@ -44,7 +44,6 @@ const ListExampleTree = () => (
           </Link>
         </List.Content>
     </List.Item>
-    <Divider />
     <List.Item>
       <List.Icon name="folder" />
       <List.Content>

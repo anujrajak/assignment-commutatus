@@ -62,19 +62,16 @@ const saveEmployee = (objectType = 'employees', employeeObject) => {
  * @param {EmployeeObject} employeeObject
  */
 const updateEmployeeInfo = (employeeObject) => {
-	debugger;
-	if (isEmployeeExist(employeeObject)) {
-		let collection = getCollection('employees');
-		if (collection.length) {
-			collection.forEach(emp => {
-				if (employeeObject.id === emp.id) {
-					emp.name = employeeObject.name;
-					emp.email = employeeObject.email;
-					emp.phoneNumber = employeeObject.phoneNumber;
-				}
-			});
-			saveCollection('employees', collection);
-		}
+	const collection = getCollection('employees');
+	if (collection.length) {
+		collection.forEach(emp => {
+			if (employeeObject.id === emp.id) {
+				emp.name = employeeObject.name;
+				emp.email = employeeObject.email;
+				emp.phoneNumber = employeeObject.phoneNumber;
+			}
+		});
+		saveCollection('employees', collection);
 	}
 };
 

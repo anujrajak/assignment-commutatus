@@ -27,7 +27,7 @@ const AddUpdateEmployee = () => {
       setEmployee({ ...existingInfo });
       setUpdateAction(true);
     }
-  }, []);
+  }, [id]);
 
   const handleChange = (e) => {
     let emp = employee;
