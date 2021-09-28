@@ -1,4 +1,4 @@
-import { Header, Grid, Button, Icon, Table } from "semantic-ui-react";
+import { Header, Grid, Icon, Table } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getCollection } from "../../helper/HelperApi";
@@ -13,17 +13,15 @@ const EmployeeDetails = () => {
   }, []);
 
   return (
-    <>
+    <div>
       <Grid>
         <Grid.Column floated="left" width={6}>
           <Header as="h3">Employee Details</Header>
           <p>Emplyee details and some more actions</p>
         </Grid.Column>
         <Grid.Column floated="right" width={6}>
-          <Link to="/updateEmployee">
-            <Button color="blue">
-              <Icon name="plus" /> Add New
-            </Button>
+          <Link to="/updateEmployee" className="ui primary button">
+            <Icon name="plus" /> New
           </Link>
         </Grid.Column>
         <Grid.Column width={12}>
@@ -48,13 +46,9 @@ const EmployeeDetails = () => {
                       <Table.Cell>{email}</Table.Cell>
                       <Table.Cell>{phoneNumber}</Table.Cell>
                       <Table.Cell>
-                        <Button.Group>
-                          <Link to={`/updateEmployee/${id}`}>
-                            <Button icon color="blue">
-                              <Icon name="edit" /> Edit
-                            </Button>
-                          </Link>
-                        </Button.Group>
+                        <Link to={`/updateEmployee/${id}`} className="ui primary button">
+                          <Icon name="edit" /> Edit
+                        </Link>
                       </Table.Cell>
                     </Table.Row>
                   );
@@ -63,7 +57,7 @@ const EmployeeDetails = () => {
           </Table>
         </Grid.Column>
       </Grid>
-    </>
+    </div>
   );
 };
 

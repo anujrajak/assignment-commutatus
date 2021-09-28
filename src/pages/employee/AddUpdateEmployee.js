@@ -2,7 +2,6 @@ import {
   Header,
   Container,
   Form,
-  Button,
   Grid,
   Input,
 } from "semantic-ui-react";
@@ -83,13 +82,7 @@ const AddUpdateEmployee = () => {
                 placeholder="joe@schmoe.com"
                 onChange={handleChange}
               />
-              <Form.Field
-                id="form-button-control-public"
-                control={Button}
-                color="blue"
-                content="Save"
-                onClick={handleSubmit}
-              />
+              <button className="ui primary button" onClick={handleSubmit}>Save</button>
             </Form>
           </Grid.Column>
         </Grid>
