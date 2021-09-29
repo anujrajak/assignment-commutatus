@@ -39,21 +39,35 @@ const saveCollection = (objectType, collectionArr) => {
  * @param {String} departmentName
  * @returns
  */
-const saveDepartment = (departmentName) => {
+const saveDepartment = ({departmentName, departmentHead}) => {
     if (!isDepartmentExist(departmentName)) {
         const departmentObject = {
             name: departmentName.toLowerCase(),
+            head: departmentHead,
             teams: [],
         };
-        let collection = getCollection("departments");
-        if (collection.length) {
-            departmentObject.id = collection[collection.length - 1].id + 1;
+        const departments = getCollection("departments");
+        const employees = getCollection("employees");
+        if (departments.length) {
+            departmentObject.id = departments[departments.length - 1].id + 1;
         } else {
             departmentObject.id = 1;
         }
-        collection.push(departmentObject);
-        saveCollection("departments", collection);
-        return collection;
+        departments.push(departmentObject);
+
+        const head = employees.find(emp => {
+            return emp.id === departmentHead
+        });
+
+        head.departmentId = departmentObject.id;
+        head.position = 'head';
+
+        saveCollection("employees", employees);
+        saveCollection("departments", departments);
+        return {
+            employees,
+            departments
+        };
     } else {
         return { error: "Department already exist." };
     }
@@ -280,7 +294,9 @@ const updateTeam = (teamObject) => {
    */
  const filterEmployees = (collection, teamId, departmentId) => {
     return collection.filter(emp => {
-      return (!emp.departmentId && !emp.teamId) || (emp.teamId === teamId && emp.departmentId === departmentId)
+        return (!emp.departmentId && !emp.teamId)
+            || (emp.teamId === teamId && emp.departmentId === departmentId)
+            || !emp.departmentId
     }).map(({ id, name }) => {
       return {
         key: id,

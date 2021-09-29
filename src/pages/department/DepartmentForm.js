@@ -1,29 +1,39 @@
-import { useState, useContext } from "react";
-import { Header, Grid, Container, Form, Input } from "semantic-ui-react";
+import { useState, useContext, useEffect } from "react";
+import { Header, Grid, Container, Form, Input, Select, Message } from "semantic-ui-react";
 import { useHistory } from "react-router-dom";
-import { saveDepartment } from "../../helper/HelperApi";
+import { saveDepartment, filterEmployees } from "../../helper/HelperApi";
 import { DepartmentsContext } from "../../context/DepartmentsContext";
 
 const DepartmentForm = () => {
   let history = useHistory();
 
-  const { setDepartments } =
-    useContext(DepartmentsContext);
+  const { employees, setDepartments, setEmployees } = useContext(DepartmentsContext);
 
-  const [name, setName] = useState(null);
+  const [departmentInfo, setDepartmentInfo] = useState({});
+  const [empOptions, setEmpOtions] = useState([]);
+  const [error, setError] = useState(null);
 
-  const handleChange = (e) => {
-    setName(e.target.value);
+  useEffect(() => {
+    const empOptions = filterEmployees(employees);
+    setEmpOtions(empOptions);
+  }, [employees]);
+
+  const handleChange = (e, { name, value }) => {
+    const depInfo = departmentInfo;
+    departmentInfo[name] = value
+    setDepartmentInfo(depInfo);
   };
 
   const handleSubmit = (e) => {
-    if (name) {
-      const result = saveDepartment(name);
-      // if (!result) {
-      //   history.push("/departments");
-      // }
-      setDepartments(result);
-      history.push("/departments");
+    if (departmentInfo) {
+      const result = saveDepartment(departmentInfo);
+      if (result.error) {
+        setError(true);
+      } else {
+        setEmployees(result.employees);
+        setDepartments(result.departments);
+        history.push("/departments");
+      }
     }
   };
 
@@ -41,7 +51,19 @@ const DepartmentForm = () => {
                 name="departmentName"
                 onChange={handleChange}
               />
-              <button className="ui primary button" onClick={handleSubmit}>
+
+              <Form.Field
+                control={Select}
+                label="Department Head"
+                placeholder="Department Head"
+                name="departmentHead"
+                options={empOptions}
+                search
+                selection
+                onChange={handleChange}
+              />
+              {error && <Message info header='Department already exists.' content="" />}
+              <button className="ui primary button" onClick={handleSubmit} >
                 Save
               </button>
             </Form>

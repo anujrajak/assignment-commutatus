@@ -2,11 +2,10 @@ import { Header, Grid, Icon, Table } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { DepartmentsContext } from "../../context/DepartmentsContext";
+import { getObjectById } from "../../helper/HelperApi";
 
 const DepartmentDetails = () => {
   const { departments, employees } = useContext(DepartmentsContext);
-
-  console.log(departments, employees);
 
   return (
     <div>
@@ -24,7 +23,7 @@ const DepartmentDetails = () => {
           <Table color="blue" key="departmentsTable">
             <Table.Header>
               <Table.Row>
-                {["ID", "Department Name", "Action"].map((title) => {
+                {["ID", "Department Name", "Head", "Action"].map((title) => {
                   return (
                     <Table.HeaderCell key={title}>{title}</Table.HeaderCell>
                   );
@@ -33,11 +32,12 @@ const DepartmentDetails = () => {
             </Table.Header>
             <Table.Body>
               {departments &&
-                departments.map(({ name, id, teams }) => {
+                departments.map(({ name, id, teams, head }) => {
                   return (
                     <Table.Row key={id}>
                       <Table.Cell>{id}</Table.Cell>
                       <Table.Cell>{name}</Table.Cell>
+                      <Table.Cell>{getObjectById(employees, head).name}</Table.Cell>
                       <Table.Cell>
                         <Link
                           to={`/departmentDetails/${id}`}
