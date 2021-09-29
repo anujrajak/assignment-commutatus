@@ -10,16 +10,16 @@ const DepartmentDetails = () => {
   return (
     <div>
       <Grid>
-        <Grid.Column floated="left" width={6}>
+        <Grid.Column floated="left" width={13}>
           <Header as="h3">Departments Details</Header>
           <p>Departments details and some more actions</p>
         </Grid.Column>
-        <Grid.Column floated="right" width={6}>
-          <Link to="/AddDepartment" className="ui primary button mini">
+        <Grid.Column floated="right" width={3}>
+          <Link to="/AddDepartment" className="ui primary right floated button mini">
             <Icon name="plus" /> New
           </Link>
         </Grid.Column>
-        <Grid.Column width={12}>
+        <Grid.Column width={16}>
           <Table color="blue" key="departmentsTable">
             <Table.Header>
               <Table.Row>

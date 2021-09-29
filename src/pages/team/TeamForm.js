@@ -26,6 +26,7 @@ const TeamForm = () => {
     useContext(DepartmentsContext);
 
   const [teamInfo, setTeamInfo] = useState({ departmentId: +departmentId });
+  const [existingTeamInfo, setExistingTeamInfo] = useState({});
   const [employeesOptions, setEmployeesOptions] = useState([]);
   const [leaderOptions, setLeaderOptions] = useState([]);
   const [updateAction, setUpdateAction] = useState(false);
@@ -39,9 +40,13 @@ const TeamForm = () => {
   useEffect(() => {
     const existingInfo = getExistingTeam(departmentId, teamId, departments);
     if (existingInfo.id) {
-      setTeamInfo(existingInfo);
+      setExistingTeamInfo(existingInfo);
       setUpdateAction(true);
-      console.log(teamInfo);
+
+      //also updating previous id of team
+      const team = teamInfo;
+      team.id = existingInfo.id;
+      team.name = existingInfo.name;
     }
   }, [employees, departmentId, teamId, departments, teamInfo]);
 
@@ -88,11 +93,11 @@ const TeamForm = () => {
                 control={Input}
                 label="Team Name"
                 name="name"
-                defaultValue={(updateAction && teamInfo.name) || ""}
+                defaultValue={(updateAction && existingTeamInfo.name) || ""}
                 onChange={handleChange}
               />
-              {updateAction && teamInfo && teamInfo.teamLeader && (
-                <p>Old team leader : {getObjectById(employees, teamInfo.teamLeader).name}</p>
+              {updateAction && existingTeamInfo && existingTeamInfo.teamLeader && (
+                <p>Old team leader : {getObjectById(employees, existingTeamInfo.teamLeader).name}</p>
               )}
               <Form.Field
                 control={Select}
@@ -103,20 +108,18 @@ const TeamForm = () => {
                 search
                 onChange={handleChange}
               />
-              {updateAction && teamInfo && teamInfo.teamMembers.length && (
+              {updateAction && existingTeamInfo && existingTeamInfo.teamMembers.length && (
                 <>
-                  <List.Item as="li" value="*">
-                    Old team members
-                    <List.Item as="ol">
-                      {teamInfo.teamMembers.map((mem) => {
+                  <p>Old team members</p>
+                    <List.Item as="ol" key={existingTeamInfo.id}>
+                      {existingTeamInfo.teamMembers.map((mem) => {
                         return (
-                          <List.Item key={mem.id} as="li" value="-">
+                          <List.Item key={mem} as="li" value="-">
                             {getObjectById(employees, mem).name}
                           </List.Item>
                         );
                       })}
                     </List.Item>
-                  </List.Item>
                 </>
               )}
               <Form.Dropdown

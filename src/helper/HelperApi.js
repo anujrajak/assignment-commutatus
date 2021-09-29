@@ -39,7 +39,7 @@ const saveCollection = (objectType, collectionArr) => {
  * @param {String} departmentName
  * @returns
  */
-const saveDepartment = ({departmentName, departmentHead}) => {
+const saveDepartment = ({ departmentName, departmentHead }) => {
     if (!isDepartmentExist(departmentName)) {
         const departmentObject = {
             name: departmentName.toLowerCase(),
@@ -55,18 +55,18 @@ const saveDepartment = ({departmentName, departmentHead}) => {
         }
         departments.push(departmentObject);
 
-        const head = employees.find(emp => {
-            return emp.id === departmentHead
+        const head = employees.find((emp) => {
+            return emp.id === departmentHead;
         });
 
         head.departmentId = departmentObject.id;
-        head.position = 'head';
+        head.position = "head";
 
         saveCollection("employees", employees);
         saveCollection("departments", departments);
         return {
             employees,
-            departments
+            departments,
         };
     } else {
         return { error: "Department already exist." };
@@ -234,7 +234,7 @@ const updateTeam = (teamObject) => {
 
     const department = departments.find((de) => {
         return de.id === teamObject.departmentId;
-	});
+    });
 
     // fetch old team info in order to update the info
     // like teamLeader and teamMembers
@@ -283,28 +283,91 @@ const updateTeam = (teamObject) => {
     return {
         updatedEmployees: employees,
         updatedDepartments: departments,
-	}
+    };
 };
 
+const getExistingTeamEmployees = (departmentId, teamId) => {
+    if (!departmentId && !teamId) {
+        return [];
+    }
+    const departments = getCollection('departments');
+    const employees = getCollection('employees');
+
+    const department = getObjectById(departments, departmentId);
+    if (department) {
+        const team = getObjectById(department.teams, teamId);
+        if (team) {
+            return employees.filter(emp => {
+                return team.teamMembers.includes(emp.id);
+            }).map(({ id, name }) => {
+                return {
+                    key: id,
+                    text: name,
+                    value: id,
+                };
+            });
+        }
+    }
+
+    return { error: "Department & Team info not found." }
+};
 
 /**
-   * Basically I'm creating object for dropdown options
-   * @param {*} collection
-   * @returns
-   */
- const filterEmployees = (collection, teamId, departmentId) => {
-    return collection.filter(emp => {
-        return (!emp.departmentId && !emp.teamId)
-            || (emp.teamId === teamId && emp.departmentId === departmentId)
-            || !emp.departmentId
-    }).map(({ id, name }) => {
-      return {
-        key: id,
-        text: name,
-        value: id,
-      };
-    });
-  };
+ * Basically I'm creating object for dropdown options
+ * @param {*} collection
+ * @returns
+ */
+const filterEmployees = (collection, teamId, departmentId) => {
+    return collection
+        .filter((emp) => {
+            return (
+                (!emp.departmentId && !emp.teamId) ||
+                (emp.teamId === +teamId && emp.departmentId === +departmentId)
+            );
+        })
+        .map(({ id, name }) => {
+            return {
+                key: id,
+                text: name,
+                value: id,
+            };
+        });
+};
+
+const updateTeamMembers = (members, departmentId, teamId, action) => {
+    const departments = getCollection('departments');
+    const employees = getCollection('employees');
+    const department = departments.find(dep => dep.id === +departmentId);
+    const team = department.teams.find(team => team.id === +teamId);
+    const selectedMembers = employees.filter(emp => members.includes(emp.id));
+
+    if (action === 'add') {
+        // Updating the members details like position.
+        selectedMembers.forEach(emp => {
+            emp.departmentId = +departmentId;
+            emp.teamId = +teamId;
+            emp.position = 'team member';
+        });
+        // Updating the teamMembers property of team.
+        team.teamMembers = [...team.teamMembers, ...members];
+
+    } else if (action === 'remove') {
+        selectedMembers.forEach(emp => {
+            emp.departmentId = null;
+            emp.teamId = null;
+            emp.position = null;
+        });
+        team.teamMembers = team.teamMembers.filter(item => !members.includes(item));
+    }
+
+    saveCollection("employees", employees);
+    saveCollection("departments", departments);
+
+    return {
+        updatedEmployees: employees,
+        updatedDepartments: departments,
+    }
+}
 
 export {
     getCollection,
@@ -319,6 +382,8 @@ export {
     saveTeam,
     isObjectExist,
     getExistingTeam,
-	updateTeam,
-	filterEmployees
+    updateTeam,
+    filterEmployees,
+    updateTeamMembers,
+    getExistingTeamEmployees
 };
