@@ -32,19 +32,21 @@ const EmployeeDetails = () => {
                 <Table.HeaderCell>Name</Table.HeaderCell>
                 <Table.HeaderCell>Email</Table.HeaderCell>
                 <Table.HeaderCell>Phone Number</Table.HeaderCell>
+                <Table.HeaderCell>Position</Table.HeaderCell>
                 <Table.HeaderCell>Action</Table.HeaderCell>
               </Table.Row>
             </Table.Header>
 
             <Table.Body>
               {employees &&
-                employees.map(({ id, name, email, phoneNumber }) => {
+                employees.map(({ id, name, email, phoneNumber, position }) => {
                   return (
                     <Table.Row key={id}>
                       <Table.Cell>{id}</Table.Cell>
                       <Table.Cell>{name}</Table.Cell>
                       <Table.Cell>{email}</Table.Cell>
                       <Table.Cell>{phoneNumber}</Table.Cell>
+                      <Table.Cell>{position}</Table.Cell>
                       <Table.Cell>
                         <Link to={`/updateEmployee/${id}`} className="ui primary button">
                           <Icon name="edit" /> Edit

@@ -46,6 +46,9 @@ function App() {
                 <Route path="/addTeam/:departmentId">
                   <TeamForm />
                 </Route>
+                <Route path="/updateTeam/:departmentId/:teamId">
+                  <TeamForm />
+                </Route>
               </Switch>
             </Grid.Column>
           </Grid>

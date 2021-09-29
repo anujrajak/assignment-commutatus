@@ -1,10 +1,14 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Header, Grid, Container, Form, Input } from "semantic-ui-react";
 import { useHistory } from "react-router-dom";
 import { saveDepartment } from "../../helper/HelperApi";
+import { DepartmentsContext } from "../../context/DepartmentsContext";
 
 const DepartmentForm = () => {
   let history = useHistory();
+
+  const { setDepartments } =
+    useContext(DepartmentsContext);
 
   const [name, setName] = useState(null);
 
@@ -15,9 +19,11 @@ const DepartmentForm = () => {
   const handleSubmit = (e) => {
     if (name) {
       const result = saveDepartment(name);
-      if (!result) {
-        history.push("/departments");
-      }
+      // if (!result) {
+      //   history.push("/departments");
+      // }
+      setDepartments(result);
+      history.push("/departments");
     }
   };
 

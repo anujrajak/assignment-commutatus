@@ -3,21 +3,21 @@
  * @param {String} objectType
  * @returns {Array}
  */
-const getCollection = (objectType) => {
-	if (!objectType) return;
-	let collection = localStorage.getItem(objectType.toLowerCase());
-	try {
-		if (collection) {
-			collection = JSON.parse(collection);
-		} else {
-			collection = [];
-			saveCollection(objectType, collection);
-		}
-	} catch (e) {
-		console.log(e);
-	} finally {
-		return collection;
-	}
+ const getCollection = (objectType) => {
+    if (!objectType) return;
+    let collection = localStorage.getItem(objectType.toLowerCase());
+    try {
+        if (collection) {
+            collection = JSON.parse(collection);
+        } else {
+            collection = [];
+            saveCollection(objectType, collection);
+        }
+    } catch (e) {
+        console.log(e);
+    } finally {
+        return collection;
+    }
 };
 
 /**
@@ -27,8 +27,11 @@ const getCollection = (objectType) => {
  * @returns
  */
 const saveCollection = (objectType, collectionArr) => {
-	if (!objectType) return;
-	localStorage.setItem(objectType.toLowerCase(), JSON.stringify(collectionArr));
+    if (!objectType) return;
+    localStorage.setItem(
+        objectType.toLowerCase(),
+        JSON.stringify(collectionArr)
+    );
 };
 
 /**
@@ -37,24 +40,24 @@ const saveCollection = (objectType, collectionArr) => {
  * @returns
  */
 const saveDepartment = (departmentName) => {
-	if (!isDepartmentExist(departmentName)) {
-		const departmentObject = {
-			name: departmentName.toLowerCase(),
-			teams: []
-		};
-		let collection = getCollection('departments');
-		if (collection.length) {
-			departmentObject.id = collection[collection.length - 1].id + 1;
-		} else {
-			departmentObject.id = 1;
-		}
-		collection.push(departmentObject);
-		saveCollection('departments', collection);
-	} else {
-		return { error: "Department already exist." };
-	}
+    if (!isDepartmentExist(departmentName)) {
+        const departmentObject = {
+            name: departmentName.toLowerCase(),
+            teams: [],
+        };
+        let collection = getCollection("departments");
+        if (collection.length) {
+            departmentObject.id = collection[collection.length - 1].id + 1;
+        } else {
+            departmentObject.id = 1;
+        }
+        collection.push(departmentObject);
+        saveCollection("departments", collection);
+        return collection;
+    } else {
+        return { error: "Department already exist." };
+    }
 };
-
 
 /**
  * Checks whether department already exist or not.
@@ -62,11 +65,10 @@ const saveDepartment = (departmentName) => {
  * @returns
  */
 const isDepartmentExist = (departmentName) => {
-	return getCollection('departments').some(department => {
-		return department.name === departmentName.toLowerCase();
-	});
-}
-
+    return getCollection("departments").some((department) => {
+        return department.name === departmentName.toLowerCase();
+    });
+};
 
 /**
  * Checks whether ant object is present or not based on name property.
@@ -75,10 +77,10 @@ const isDepartmentExist = (departmentName) => {
  * @returns {Boolean}
  */
 const isObjectExist = (name, collection) => {
-	return collection.some(obj => {
-		return obj.name === name.toLowerCase();
-	});
-}
+    return collection.some((obj) => {
+        return obj.name === name.toLowerCase();
+    });
+};
 
 /**
  * Checks whether employee already exist in the collection or not.
@@ -86,9 +88,9 @@ const isObjectExist = (name, collection) => {
  * @returns {Boolean}
  */
 const isEmployeeExist = ({ email }) => {
-	return getCollection('employees').filter(emp => {
-		return email && email.toLowerCase() === emp.email.toLowerCase();
-	}).length;
+    return getCollection("employees").filter((emp) => {
+        return email && email.toLowerCase() === emp.email.toLowerCase();
+    }).length;
 };
 
 /**
@@ -96,19 +98,20 @@ const isEmployeeExist = ({ email }) => {
  * @param {String} objectType Collection type
  * @param {EmployeeObject} employeeObject to be saved
  */
-const saveEmployee = (objectType = 'employees', employeeObject) => {
-	if (!isEmployeeExist(employeeObject)) {
-		let collection = getCollection(objectType);
-		if (collection.length) {
-			employeeObject.id = collection[collection.length - 1].id + 1;
-		} else {
-			employeeObject.id = 1;
-		}
-		collection.push(employeeObject);
-		saveCollection('employees', collection);
-	} else {
-		return { error: "Employee already exist." };
-	}
+const saveEmployee = (objectType = "employees", employeeObject) => {
+    if (!isEmployeeExist(employeeObject)) {
+        let collection = getCollection(objectType);
+        if (collection.length) {
+            employeeObject.id = collection[collection.length - 1].id + 1;
+        } else {
+            employeeObject.id = 1;
+        }
+        collection.push(employeeObject);
+        saveCollection("employees", collection);
+        return { collection };
+    } else {
+        return { error: "Employee already exist." };
+    }
 };
 
 /**
@@ -116,17 +119,18 @@ const saveEmployee = (objectType = 'employees', employeeObject) => {
  * @param {EmployeeObject} employeeObject
  */
 const updateEmployeeInfo = (employeeObject) => {
-	const collection = getCollection('employees');
-	if (collection.length) {
-		collection.forEach(emp => {
-			if (employeeObject.id === emp.id) {
-				emp.name = employeeObject.name;
-				emp.email = employeeObject.email;
-				emp.phoneNumber = employeeObject.phoneNumber;
-			}
-		});
-		saveCollection('employees', collection);
-	}
+    const collection = getCollection("employees");
+    if (collection.length) {
+        collection.forEach((emp) => {
+            if (employeeObject.id === emp.id) {
+                emp.name = employeeObject.name;
+                emp.email = employeeObject.email;
+                emp.phoneNumber = employeeObject.phoneNumber;
+            }
+        });
+        saveCollection("employees", collection);
+        return { collection };
+    }
 };
 
 /**
@@ -134,10 +138,10 @@ const updateEmployeeInfo = (employeeObject) => {
  * @param {Number} employeeId
  * @returns EmployeeObject
  */
-const getEmployeeById = (employeeId) => {
-	return getCollection('employees').find(({ id }) => {
-		return id === employeeId
-	});
+const getEmployeeById = (employeeId, collection) => {
+    return collection.find(({ id }) => {
+        return id === employeeId;
+    });
 };
 
 /**
@@ -145,12 +149,22 @@ const getEmployeeById = (employeeId) => {
  * @param {Number} employeeId
  * @returns EmployeeObject
  */
- const getObjectById = (collection, objectId) => {
-	return collection.find(({ id }) => {
-		return id === +objectId
-	});
- };
+const getObjectById = (collection, objectId) => {
+    return collection.find(({ id }) => {
+        return id === +objectId;
+    });
+};
 
+const getExistingTeam = (departmentId, teamId, collection) => {
+    const department = getObjectById(collection, +departmentId);
+    if (department) {
+        const team = getObjectById(department.teams, +teamId);
+
+        return team ? team : {};
+    }
+
+    return {};
+};
 
 /**
  * Store team data.
@@ -158,47 +172,137 @@ const getEmployeeById = (employeeId) => {
  * @returns {Object}
  */
 const saveTeam = (teamObject) => {
-	const departments = getCollection('departments');
-	if (departments.length) {
-		teamObject.id = departments[departments.length - 1].id + 1;
-	} else {
-		teamObject.id = 1;
-	}
-	const employees = getCollection('employees');
-	departments.forEach(dep => {
-		if (dep.id === teamObject.departmentId && !isObjectExist(teamObject.name, dep.teams)) {
-			dep.teams.push(teamObject);
+    const departments = getCollection("departments");
 
-			const selectedMembers = employees.filter(({ id }) => {
-				return teamObject.teamMembers.includes(id);
-			});
+    const department = departments.find((de) => {
+        return de.id === teamObject.departmentId;
+    });
+    const employees = getCollection("employees");
+    if (!isObjectExist(teamObject.name, department.teams)) {
+        const teams = department.teams;
+        if (teams.length) {
+            teamObject.id = teams[teams.length - 1].id + 1;
+        } else {
+            teamObject.id = 1;
+        }
+        department.teams.push(teamObject);
 
-			selectedMembers.forEach(emp => {
-				emp.departmentId = teamObject.departmentId;
-				emp.teamId = teamObject.id;
-			});
-		}
+        const selectedMembers = employees.filter(({ id }) => {
+            return (
+                teamObject.teamMembers.includes(id) ||
+                id === teamObject.teamLeader
+            );
+        });
+
+        selectedMembers.forEach((emp) => {
+            if (teamObject.teamLeader === emp.id) {
+                emp.position = "team leader";
+            } else {
+                emp.position = "team member";
+            }
+            emp.departmentId = teamObject.departmentId;
+            emp.teamId = teamObject.id;
+        });
+    }
+
+    saveCollection("employees", employees);
+    saveCollection("departments", departments);
+
+    return {
+        updatedEmployees: employees,
+        updatedDepartments: departments,
+    };
+};
+
+const updateTeam = (teamObject) => {
+    const departments = getCollection("departments");
+    const employees = getCollection("employees");
+
+    const department = departments.find((de) => {
+        return de.id === teamObject.departmentId;
 	});
 
-	saveCollection('employees', employees);
-	saveCollection('departments', departments);
+    // fetch old team info in order to update the info
+    // like teamLeader and teamMembers
+    const team = department.teams.find((te) => {
+        return te.id === teamObject.id;
+    });
 
-	return {
-		updatedEmployees: employees,
-		updatedDepartments: departments
+    // updating position for old memebers and leader
+    const teamLeader = employees.find((emp) => emp.id === team.teamLeader);
+    teamLeader.position = null;
+    teamLeader.teamId = null;
+    teamLeader.departmentId = null;
+    const oldMembers = employees.filter((emp) =>
+        team.teamMembers.includes(emp.id)
+    );
+    oldMembers.forEach((mem) => {
+        teamLeader.position = null;
+        teamLeader.teamId = null;
+        teamLeader.departmentId = null;
+    });
+
+    // updating information for updated members
+    const selectedMembers = employees.filter(({ id }) => {
+        return (
+            teamObject.teamMembers.includes(id) || id === teamObject.teamLeader
+        );
+    });
+
+    selectedMembers.forEach((emp) => {
+        if (teamObject.teamLeader === emp.id) {
+            emp.position = "team leader";
+        } else {
+            emp.position = "team member";
+        }
+        emp.departmentId = teamObject.departmentId;
+        emp.teamId = teamObject.id;
+    });
+
+    team.name = teamObject.name;
+    team.teamLeader = teamObject.teamLeader;
+    team.teamMembers = teamObject.teamMembers;
+
+    saveCollection("employees", employees);
+    saveCollection("departments", departments);
+
+    return {
+        updatedEmployees: employees,
+        updatedDepartments: departments,
 	}
 };
 
+
+/**
+   * Basically I'm creating object for dropdown options
+   * @param {*} collection
+   * @returns
+   */
+ const filterEmployees = (collection, teamId, departmentId) => {
+    return collection.filter(emp => {
+      return (!emp.departmentId && !emp.teamId) || (emp.teamId === teamId && emp.departmentId === departmentId)
+    }).map(({ id, name }) => {
+      return {
+        key: id,
+        text: name,
+        value: id,
+      };
+    });
+  };
+
 export {
-	getCollection,
-	saveCollection,
-	isEmployeeExist,
-	saveEmployee,
-	getEmployeeById,
-	getObjectById,
-	updateEmployeeInfo,
-	saveDepartment,
-	isDepartmentExist,
-	saveTeam,
-	isObjectExist
+    getCollection,
+    saveCollection,
+    isEmployeeExist,
+    saveEmployee,
+    getEmployeeById,
+    getObjectById,
+    updateEmployeeInfo,
+    saveDepartment,
+    isDepartmentExist,
+    saveTeam,
+    isObjectExist,
+    getExistingTeam,
+	updateTeam,
+	filterEmployees
 };

@@ -6,27 +6,31 @@ import {
   Input,
 } from "semantic-ui-react";
 import { useHistory, useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import {
   saveEmployee,
-  getEmployeeById,
+  getObjectById,
   updateEmployeeInfo,
 } from "../../helper/HelperApi";
 
+import { DepartmentsContext } from "../../context/DepartmentsContext";
+
 const AddUpdateEmployee = () => {
   let history = useHistory();
+  const { employees, setEmployees } = useContext(DepartmentsContext);
 
   const [employee, setEmployee] = useState({});
   const [updateAction, setUpdateAction] = useState(false);
 
   let { id } = useParams();
+
   useEffect(() => {
-    const existingInfo = getEmployeeById(+id);
+    const existingInfo = getObjectById(employees, +id);
     if (existingInfo && existingInfo.email) {
       setEmployee({ ...existingInfo });
       setUpdateAction(true);
     }
-  }, [id]);
+  }, [id, employees]);
 
   const handleChange = (e) => {
     let emp = employee;
@@ -37,10 +41,14 @@ const AddUpdateEmployee = () => {
 
   const handleSubmit = () => {
     let emp = employee;
+    let result = {};
     if (updateAction) {
-      updateEmployeeInfo(emp);
+      result = updateEmployeeInfo(emp);
     } else {
-      saveEmployee("employees", emp);
+      result = saveEmployee("employees", emp);
+    }
+    if (!result.error) {
+      setEmployees(result.collection);
     }
     history.push("/employee");
   };
