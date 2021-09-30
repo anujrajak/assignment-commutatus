@@ -46,7 +46,7 @@ const EmployeeDetails = () => {
           </Link>
         </Grid.Column>
         <Grid.Column width={16}>
-          <Table key="employeesTable" color="blue">
+          <Table key="employeesTable" celled>
             <Table.Header>
               <Table.Row>
                 <Table.HeaderCell colSpan={5}>
@@ -74,7 +74,7 @@ const EmployeeDetails = () => {
             <Table.Body>
               {searchResults &&
                 searchResults.map(
-                  ({ id, name, email, phoneNumber, position }) => {
+                  ({ id, name, email, phoneNumber, position, departmentId, teamId }) => {
                     return (
                       <Table.Row key={id}>
                         <Table.Cell>{id}</Table.Cell>
@@ -82,13 +82,20 @@ const EmployeeDetails = () => {
                         <Table.Cell>{email}</Table.Cell>
                         <Table.Cell>{phoneNumber}</Table.Cell>
                         <Table.Cell>{position}</Table.Cell>
-                        <Table.Cell>
+                        <Table.Cell width={2}>
                           <Link
                             to={`/updateEmployee/${id}`}
                             className="ui primary center floated button mini"
                           >
                             <Icon name="edit" /> Edit
                           </Link>
+
+                          {departmentId && teamId && id && position === 'team member' && <Link
+                            to={`/changeTeam/${departmentId}/${teamId}/${id}`}
+                            className="ui secondary center floated button mini"
+                          >
+                            Change Team
+                          </Link>}
                         </Table.Cell>
                       </Table.Row>
                     );

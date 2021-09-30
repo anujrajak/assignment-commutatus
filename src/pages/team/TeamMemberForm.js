@@ -84,6 +84,7 @@ const TeamMemberForm = () => {
                   search
                   multiple
                   onChange={handleChange}
+                  selectOnBlur={false}
                 />
                 <button className="ui primary button" onClick={handleSubmit}>
                   Save

@@ -107,6 +107,7 @@ const TeamForm = () => {
                 placeholder="Team Leader"
                 search
                 onChange={handleChange}
+                selectOnBlur={false}
               />
               {updateAction === 'update' && existingTeamInfo && existingTeamInfo.teamMembers.length && (
                 <>
@@ -133,6 +134,7 @@ const TeamForm = () => {
                 multiple
                 selection
                 onChange={handleChange}
+                selectOnBlur={false}
               />}
 
               <button className="ui primary button" onClick={handleSubmit}>

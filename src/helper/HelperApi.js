@@ -9,7 +9,7 @@ import defaultEmployeesData from "../data/defaultEmployeesData.json";
  */
 const loadDepartmentsData = () => {
     const data = defaultDepartmentData;
-    saveCollection('depatments', data.departments);
+    saveCollection('departments', data.departments);
 
     return data.departments;
 }
@@ -377,6 +377,46 @@ const updateTeamMembers = (members, departmentId, teamId, action) => {
         updatedEmployees: employees,
         updatedDepartments: departments,
     }
+};
+
+const changeTeam = (oldInfo, newInfo, employeeId) => {
+    const { oldDep, oldTeam: oldTeamId } = oldInfo;
+    const { departmentId, teamId } = newInfo;
+
+    if (!departmentId || !teamId) {
+        return { error: "Please select information properly." }
+    }
+
+    if (departmentId && teamId && oldDep === departmentId && oldTeamId === teamId) {
+        return { error: "Please update valid department and team." };
+    }
+
+    const departments = getCollection('departments');
+    const employees = getCollection('employees');
+
+    // find old department and team to remove the employeeId
+    const oldDepartment = departments.find(dep => dep.id === oldDep);
+    const oldTeam = oldDepartment.teams.find(team => team.id === oldTeamId);
+    oldTeam.teamMembers = oldTeam.teamMembers.filter(item => item !== +employeeId);
+
+    // find new department and team to add the employeeId
+    const newDepartment = departments.find(dep => dep.id === departmentId);
+    const newTeam = newDepartment.teams.find(team => team.id === teamId);
+    newTeam.teamMembers.push(+employeeId);
+
+    // find employee to update the new department and team
+    const employee = employees.find(emp => emp.id === +employeeId);
+    employee.departmentId = departmentId;
+    employee.teamId = teamId;
+
+    saveCollection("employees", employees);
+    saveCollection("departments", departments);
+
+    return {
+        updatedEmployees: employees,
+        updatedDepartments: departments,
+    }
+
 }
 
 export {
@@ -397,5 +437,6 @@ export {
     updateTeamMembers,
     getExistingTeamEmployees,
     loadDepartmentsData,
-    loadEmployeesData
+    loadEmployeesData,
+    changeTeam
 };

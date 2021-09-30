@@ -61,6 +61,7 @@ const DepartmentForm = () => {
                 search
                 selection
                 onChange={handleChange}
+                selectOnBlur={false}
               />
               {error && <Message info header='Department already exists.' content="" />}
               <button className="ui primary button" onClick={handleSubmit} >

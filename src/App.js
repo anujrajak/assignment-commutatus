@@ -17,6 +17,8 @@ import DepartmentForm from "./pages/department/DepartmentForm";
 import TeamDetails from "./pages/team/TeamDetails";
 import TeamForm from "./pages/team/TeamForm";
 import TeamMemberForm from "./pages/team/TeamMemberForm";
+import ChangeTeam from "./pages/employee/ChangeTeam";
+
 
 import InfoTree from "./components/InfoTree";
 
@@ -61,6 +63,9 @@ function App() {
                   </Route>
                   <Route path="/updateMembers/:action/:departmentId/:teamId">
                     <TeamMemberForm />
+                  </Route>
+                  <Route path="/changeTeam/:departmentId/:teamId/:employeeId">
+                    <ChangeTeam />
                   </Route>
                 </Switch>
               </Grid.Column>

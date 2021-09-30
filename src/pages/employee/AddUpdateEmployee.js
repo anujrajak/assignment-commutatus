@@ -4,6 +4,7 @@ import {
   Form,
   Grid,
   Input,
+  Message
 } from "semantic-ui-react";
 import { useHistory, useParams } from "react-router-dom";
 import { useEffect, useState, useContext } from "react";
@@ -21,6 +22,7 @@ const AddUpdateEmployee = () => {
 
   const [employee, setEmployee] = useState({});
   const [updateAction, setUpdateAction] = useState(false);
+  const [error, setError] = useState(null);
 
   let { id } = useParams();
 
@@ -47,10 +49,12 @@ const AddUpdateEmployee = () => {
     } else {
       result = saveEmployee("employees", emp);
     }
-    if (!result.error) {
+    if (result.error) {
+      setError(result.error);
+    } else {
       setEmployees(result.collection);
+      history.push("/employee");
     }
-    history.push("/employee");
   };
 
   return (
@@ -90,6 +94,7 @@ const AddUpdateEmployee = () => {
                 placeholder="joe@schmoe.com"
                 onChange={handleChange}
               />
+              {error && <Message info header={error} content="" />}
               <button className="ui primary button" onClick={handleSubmit}>Save</button>
             </Form>
           </Grid.Column>
