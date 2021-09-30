@@ -1,26 +1,26 @@
 {
   "files": {
-    "main.css": "/static/css/main.6dea0f05.chunk.css",
-    "main.js": "/static/js/main.16f40c38.chunk.js",
-    "main.js.map": "/static/js/main.16f40c38.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.8a403e21.js",
-    "runtime-main.js.map": "/static/js/runtime-main.8a403e21.js.map",
-    "static/css/2.bad41965.chunk.css": "/static/css/2.bad41965.chunk.css",
-    "static/js/2.e640cef9.chunk.js": "/static/js/2.e640cef9.chunk.js",
-    "static/js/2.e640cef9.chunk.js.map": "/static/js/2.e640cef9.chunk.js.map",
-    "static/js/3.f129985d.chunk.js": "/static/js/3.f129985d.chunk.js",
-    "static/js/3.f129985d.chunk.js.map": "/static/js/3.f129985d.chunk.js.map",
-    "index.html": "/index.html",
-    "static/css/2.bad41965.chunk.css.map": "/static/css/2.bad41965.chunk.css.map",
-    "static/css/main.6dea0f05.chunk.css.map": "/static/css/main.6dea0f05.chunk.css.map",
-    "static/js/2.e640cef9.chunk.js.LICENSE.txt": "/static/js/2.e640cef9.chunk.js.LICENSE.txt",
-    "static/media/semantic.min.css": "/static/media/outline-icons.ddae9b1b.woff"
+    "main.css": "/assignment-commutatus/static/css/main.6dea0f05.chunk.css",
+    "main.js": "/assignment-commutatus/static/js/main.992d6757.chunk.js",
+    "main.js.map": "/assignment-commutatus/static/js/main.992d6757.chunk.js.map",
+    "runtime-main.js": "/assignment-commutatus/static/js/runtime-main.68151c38.js",
+    "runtime-main.js.map": "/assignment-commutatus/static/js/runtime-main.68151c38.js.map",
+    "static/css/2.a30836cb.chunk.css": "/assignment-commutatus/static/css/2.a30836cb.chunk.css",
+    "static/js/2.5cf28e8c.chunk.js": "/assignment-commutatus/static/js/2.5cf28e8c.chunk.js",
+    "static/js/2.5cf28e8c.chunk.js.map": "/assignment-commutatus/static/js/2.5cf28e8c.chunk.js.map",
+    "static/js/3.f129985d.chunk.js": "/assignment-commutatus/static/js/3.f129985d.chunk.js",
+    "static/js/3.f129985d.chunk.js.map": "/assignment-commutatus/static/js/3.f129985d.chunk.js.map",
+    "index.html": "/assignment-commutatus/index.html",
+    "static/css/2.a30836cb.chunk.css.map": "/assignment-commutatus/static/css/2.a30836cb.chunk.css.map",
+    "static/css/main.6dea0f05.chunk.css.map": "/assignment-commutatus/static/css/main.6dea0f05.chunk.css.map",
+    "static/js/2.5cf28e8c.chunk.js.LICENSE.txt": "/assignment-commutatus/static/js/2.5cf28e8c.chunk.js.LICENSE.txt",
+    "static/media/semantic.min.css": "/assignment-commutatus/static/media/outline-icons.ddae9b1b.woff"
   },
   "entrypoints": [
-    "static/js/runtime-main.8a403e21.js",
-    "static/css/2.bad41965.chunk.css",
-    "static/js/2.e640cef9.chunk.js",
+    "static/js/runtime-main.68151c38.js",
+    "static/css/2.a30836cb.chunk.css",
+    "static/js/2.5cf28e8c.chunk.js",
     "static/css/main.6dea0f05.chunk.css",
-    "static/js/main.16f40c38.chunk.js"
+    "static/js/main.992d6757.chunk.js"
   ]
 }
