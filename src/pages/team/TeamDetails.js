@@ -47,7 +47,7 @@ const TeamDetails = () => {
                         <Table.Cell>{name}</Table.Cell>
                         <Table.Cell>{getObjectById(employees, teamLeader).name}</Table.Cell>
                         <Table.Cell>
-                          <List key={id} items={teamMembers.map(mem => {
+                          <List key={id} items={teamMembers && teamMembers.map(mem => {
                             return getObjectById(employees, mem).name
                           })} />
                         </Table.Cell>

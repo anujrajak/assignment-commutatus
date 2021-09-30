@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-import { getCollection } from "../helper/HelperApi";
+import { getCollection, loadDepartmentsData, loadEmployeesData } from "../helper/HelperApi";
 
 export const DepartmentsContext = createContext();
 
@@ -8,8 +8,16 @@ export const DepartmentsProvider = ({ children }) => {
   const [employees, setEmployees] = useState([]);
 
   useEffect(() => {
-    setDepartments(getCollection('departments'));
-    setEmployees(getCollection('employees'));
+    let deps = getCollection('departments');
+    let emps = getCollection('employees');
+    if (!deps.length) {
+      deps = loadDepartmentsData();
+    }
+    if (!emps.length) {
+      emps = loadEmployeesData();
+    }
+    setDepartments(deps);
+    setEmployees(emps);
   }, []);
 
   return (

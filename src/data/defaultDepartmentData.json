@@ -1,0 +1,42 @@
+{
+    "departments": [{
+        "name": "head of engineering",
+        "head": 1,
+        "teams": [{
+            "departmentId": 1,
+            "name": "Team 1",
+            "teamLeader": 4,
+            "teamMembers": [5, 6, 7],
+            "id": 1
+        }, {
+            "departmentId": 1,
+            "name": "Team 2",
+            "teamLeader": 15,
+            "teamMembers": [16, 17, 18, 19],
+            "id": 2
+        }],
+        "id": 1
+    }, {
+        "name": "head of staff/hr",
+        "head": 2,
+        "teams": [{
+            "departmentId": 2,
+            "name": "Team HR 1 ",
+            "teamLeader": 8,
+            "teamMembers": [9, 10],
+            "id": 1
+        }],
+        "id": 2
+    }, {
+        "name": " head of design",
+        "head": 3,
+        "teams": [{
+            "departmentId": 3,
+            "name": "Design Team",
+            "teamLeader": 11,
+            "teamMembers": [12, 13, 14],
+            "id": 1
+        }],
+        "id": 3
+    }]
+}

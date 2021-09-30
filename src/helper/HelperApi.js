@@ -1,9 +1,32 @@
+import defaultDepartmentData from "../data/defaultDepartmentData.json";
+import defaultEmployeesData from "../data/defaultEmployeesData.json";
+
+/**
+ * I will be loading default data in case there is no proper data
+ * present in the localStorage
+ * @param {*} objectType
+ * @returns
+ */
+const loadDepartmentsData = () => {
+    const data = defaultDepartmentData;
+    saveCollection('depatments', data.departments);
+
+    return data.departments;
+}
+
+const loadEmployeesData = () => {
+    const data = defaultEmployeesData;
+    saveCollection('employees', data.employees);
+
+    return data.employees;
+}
+
 /**
  * It fetches the collection from local storage.
  * @param {String} objectType
  * @returns {Array}
  */
- const getCollection = (objectType) => {
+const getCollection = (objectType) => {
     if (!objectType) return;
     let collection = localStorage.getItem(objectType.toLowerCase());
     try {
@@ -247,35 +270,22 @@ const updateTeam = (teamObject) => {
     teamLeader.position = null;
     teamLeader.teamId = null;
     teamLeader.departmentId = null;
-    const oldMembers = employees.filter((emp) =>
-        team.teamMembers.includes(emp.id)
-    );
-    oldMembers.forEach((mem) => {
-        teamLeader.position = null;
-        teamLeader.teamId = null;
-        teamLeader.departmentId = null;
+
+    // updating information for updated leader
+    const selectedLeader = employees.find(({ id }) => {
+        return id === teamObject.teamLeader
     });
 
-    // updating information for updated members
-    const selectedMembers = employees.filter(({ id }) => {
-        return (
-            teamObject.teamMembers.includes(id) || id === teamObject.teamLeader
-        );
-    });
-
-    selectedMembers.forEach((emp) => {
-        if (teamObject.teamLeader === emp.id) {
-            emp.position = "team leader";
-        } else {
-            emp.position = "team member";
-        }
-        emp.departmentId = teamObject.departmentId;
-        emp.teamId = teamObject.id;
-    });
+    if (selectedLeader) {
+        selectedLeader.position = "team leader";
+        selectedLeader.departmentId = teamObject.departmentId;
+        selectedLeader.teamId = teamObject.id;
+    }
 
     team.name = teamObject.name;
-    team.teamLeader = teamObject.teamLeader;
-    team.teamMembers = teamObject.teamMembers;
+    if (teamObject.teamLeader) {
+        team.teamLeader = teamObject.teamLeader;
+    }
 
     saveCollection("employees", employees);
     saveCollection("departments", departments);
@@ -385,5 +395,7 @@ export {
     updateTeam,
     filterEmployees,
     updateTeamMembers,
-    getExistingTeamEmployees
+    getExistingTeamEmployees,
+    loadDepartmentsData,
+    loadEmployeesData
 };

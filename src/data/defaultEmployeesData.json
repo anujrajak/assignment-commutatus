@@ -1,0 +1,130 @@
+{
+    "employees": [
+        {
+            "id": 1,
+            "name": "Jaime Bernard",
+            "email": "jaimebernard@boink.com",
+            "phoneNumber": "+1 (993) 442-2118"
+        },
+        {
+            "id": 2,
+            "name": "Janis Middleton",
+            "email": "janismiddleton@boink.com",
+            "phoneNumber": "+1 (907) 528-2508"
+        },
+        {
+            "id": 3,
+            "name": "Valarie Gonzalez",
+            "email": "valariegonzalez@boink.com",
+            "phoneNumber": "+1 (806) 455-2812"
+        },
+        {
+            "id": 4,
+            "name": "Huber Rivas",
+            "email": "huberrivas@boink.com",
+            "phoneNumber": "+1 (843) 484-2869"
+        },
+        {
+            "id": 5,
+            "name": "Cora Morris",
+            "email": "coramorris@boink.com",
+            "phoneNumber": "+1 (851) 409-2633"
+        },
+        {
+            "id": 6,
+            "name": "Cole Stout",
+            "email": "colestout@podunk.com",
+            "phoneNumber": "+1 (944) 448-3083"
+        },
+        {
+            "id": 7,
+            "name": "Dorothy Parks",
+            "email": "dorothyparks@podunk.com",
+            "phoneNumber": "+1 (866) 405-2564"
+        },
+        {
+            "id": 8,
+            "name": "Alissa Pickett",
+            "email": "alissapickett@podunk.com",
+            "phoneNumber": "+1 (824) 419-2959"
+        },
+        {
+            "id": 9,
+            "name": "Mara Bishop",
+            "email": "marabishop@podunk.com",
+            "phoneNumber": "+1 (864) 526-3469"
+        },
+        {
+            "id": 10,
+            "name": "Mcpherson Carlson",
+            "email": "mcphersoncarlson@podunk.com",
+            "phoneNumber": "+1 (872) 512-3657"
+        },
+        {
+            "id": 11,
+            "name": "Liliana Strong",
+            "email": "lilianastrong@podunk.com",
+            "phoneNumber": "+1 (863) 583-2051"
+        },
+        {
+            "id": 12,
+            "name": "Juliette Callahan",
+            "email": "juliettecallahan@podunk.com",
+            "phoneNumber": "+1 (888) 522-3881"
+        },
+        {
+            "id": 13,
+            "name": "Alison Galloway",
+            "email": "alisongalloway@podunk.com",
+            "phoneNumber": "+1 (897) 421-3559"
+        },
+        {
+            "id": 14,
+            "name": "Rowe Crawford",
+            "email": "rowecrawford@podunk.com",
+            "phoneNumber": "+1 (936) 498-3288"
+        },
+        {
+            "id": 15,
+            "name": "Nielsen Norris",
+            "email": "nielsennorris@podunk.com",
+            "phoneNumber": "+1 (868) 463-3333"
+        },
+        {
+            "id": 16,
+            "name": "Stacy Suarez",
+            "email": "stacysuarez@podunk.com",
+            "phoneNumber": "+1 (952) 556-2280"
+        },
+        {
+            "id": 17,
+            "name": "Guthrie Parrish",
+            "email": "guthrieparrish@podunk.com",
+            "phoneNumber": "+1 (965) 402-3884"
+        },
+        {
+            "id": 18,
+            "name": "Rose Kerr",
+            "email": "rosekerr@podunk.com",
+            "phoneNumber": "+1 (905) 486-2774"
+        },
+        {
+            "id": 19,
+            "name": "Vance Bean",
+            "email": "vancebean@podunk.com",
+            "phoneNumber": "+1 (970) 581-3100"
+        },
+        {
+            "id": 20,
+            "name": "Hunt Burgess",
+            "email": "huntburgess@podunk.com",
+            "phoneNumber": "+1 (882) 447-2711"
+        },
+        {
+            "id": 21,
+            "name": "Pamela Odonnell",
+            "email": "pamelaodonnell@podunk.com",
+            "phoneNumber": "+1 (913) 459-3125"
+        }
+    ]
+}

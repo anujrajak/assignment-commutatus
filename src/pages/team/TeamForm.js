@@ -29,7 +29,7 @@ const TeamForm = () => {
   const [existingTeamInfo, setExistingTeamInfo] = useState({});
   const [employeesOptions, setEmployeesOptions] = useState([]);
   const [leaderOptions, setLeaderOptions] = useState([]);
-  const [updateAction, setUpdateAction] = useState(false);
+  const [updateAction, setUpdateAction] = useState('add');
 
   useEffect(() => {
     const empOptions = filterEmployees(employees, teamId, departmentId);
@@ -41,7 +41,7 @@ const TeamForm = () => {
     const existingInfo = getExistingTeam(departmentId, teamId, departments);
     if (existingInfo.id) {
       setExistingTeamInfo(existingInfo);
-      setUpdateAction(true);
+      setUpdateAction('update');
 
       //also updating previous id of team
       const team = teamInfo;
@@ -69,9 +69,9 @@ const TeamForm = () => {
 
   const handleSubmit = (e) => {
     let result;
-    if (updateAction) {
+    if (updateAction === 'update') {
       result = updateTeam(teamInfo);
-    } else {
+    } else if (updateAction === 'add') {
       result = saveTeam(teamInfo);
     }
     setEmployees(result.updatedEmployees);
@@ -96,7 +96,7 @@ const TeamForm = () => {
                 defaultValue={(updateAction && existingTeamInfo.name) || ""}
                 onChange={handleChange}
               />
-              {updateAction && existingTeamInfo && existingTeamInfo.teamLeader && (
+              {updateAction === 'update' && existingTeamInfo && existingTeamInfo.teamLeader && (
                 <p>Old team leader : {getObjectById(employees, existingTeamInfo.teamLeader).name}</p>
               )}
               <Form.Field
@@ -108,7 +108,7 @@ const TeamForm = () => {
                 search
                 onChange={handleChange}
               />
-              {updateAction && existingTeamInfo && existingTeamInfo.teamMembers.length && (
+              {updateAction === 'update' && existingTeamInfo && existingTeamInfo.teamMembers.length && (
                 <>
                   <p>Old team members</p>
                     <List.Item as="ol" key={existingTeamInfo.id}>
@@ -122,7 +122,8 @@ const TeamForm = () => {
                     </List.Item>
                 </>
               )}
-              <Form.Dropdown
+
+              {updateAction === "add" && <Form.Dropdown
                 control={Select}
                 label="Team Members"
                 placeholder="Team Memebers"
@@ -132,7 +133,7 @@ const TeamForm = () => {
                 multiple
                 selection
                 onChange={handleChange}
-              />
+              />}
 
               <button className="ui primary button" onClick={handleSubmit}>
                 Save
