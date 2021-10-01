@@ -115,7 +115,7 @@ const isDepartmentExist = (departmentName) => {
  */
 const isObjectExist = (name, collection) => {
     return collection.some((obj) => {
-        return obj.name === name.toLowerCase();
+        return obj.name.toLowerCase() === name.toLowerCase();
     });
 };
 
@@ -240,6 +240,8 @@ const saveTeam = (teamObject) => {
             emp.departmentId = teamObject.departmentId;
             emp.teamId = teamObject.id;
         });
+    } else {
+        return { error: "Please change the team name since this is already taken." };
     }
 
     saveCollection("employees", employees);
@@ -258,42 +260,45 @@ const updateTeam = (teamObject) => {
     const department = departments.find((de) => {
         return de.id === teamObject.departmentId;
     });
+    if (!isObjectExist(teamObject.name, department.teams)) {
+        // fetch old team info in order to update the info
+        // like teamLeader and teamMembers
+        const team = department.teams.find((te) => {
+            return te.id === teamObject.id;
+        });
 
-    // fetch old team info in order to update the info
-    // like teamLeader and teamMembers
-    const team = department.teams.find((te) => {
-        return te.id === teamObject.id;
-    });
+        // updating position for old memebers and leader
+        const teamLeader = employees.find((emp) => emp.id === team.teamLeader);
+        teamLeader.position = null;
+        teamLeader.teamId = null;
+        teamLeader.departmentId = null;
 
-    // updating position for old memebers and leader
-    const teamLeader = employees.find((emp) => emp.id === team.teamLeader);
-    teamLeader.position = null;
-    teamLeader.teamId = null;
-    teamLeader.departmentId = null;
+        // updating information for updated leader
+        const selectedLeader = employees.find(({ id }) => {
+            return id === teamObject.teamLeader
+        });
 
-    // updating information for updated leader
-    const selectedLeader = employees.find(({ id }) => {
-        return id === teamObject.teamLeader
-    });
+        if (selectedLeader) {
+            selectedLeader.position = "team leader";
+            selectedLeader.departmentId = teamObject.departmentId;
+            selectedLeader.teamId = teamObject.id;
+        }
 
-    if (selectedLeader) {
-        selectedLeader.position = "team leader";
-        selectedLeader.departmentId = teamObject.departmentId;
-        selectedLeader.teamId = teamObject.id;
+        team.name = teamObject.name;
+        if (teamObject.teamLeader) {
+            team.teamLeader = teamObject.teamLeader;
+        }
+
+        saveCollection("employees", employees);
+        saveCollection("departments", departments);
+
+        return {
+            updatedEmployees: employees,
+            updatedDepartments: departments,
+        };
+    } else {
+        return { error: "Please change the team name since this is already taken." };
     }
-
-    team.name = teamObject.name;
-    if (teamObject.teamLeader) {
-        team.teamLeader = teamObject.teamLeader;
-    }
-
-    saveCollection("employees", employees);
-    saveCollection("departments", departments);
-
-    return {
-        updatedEmployees: employees,
-        updatedDepartments: departments,
-    };
 };
 
 const getExistingTeamEmployees = (departmentId, teamId) => {

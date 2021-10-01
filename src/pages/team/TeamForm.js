@@ -7,6 +7,7 @@ import {
   Input,
   Select,
   List,
+  Message
 } from "semantic-ui-react";
 import { useHistory, useParams } from "react-router-dom";
 import { DepartmentsContext } from "../../context/DepartmentsContext";
@@ -30,6 +31,7 @@ const TeamForm = () => {
   const [employeesOptions, setEmployeesOptions] = useState([]);
   const [leaderOptions, setLeaderOptions] = useState([]);
   const [updateAction, setUpdateAction] = useState('add');
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const empOptions = filterEmployees(employees, teamId, departmentId);
@@ -73,9 +75,14 @@ const TeamForm = () => {
     } else if (updateAction === 'add') {
       result = saveTeam(teamInfo);
     }
-    setEmployees(result.updatedEmployees);
-    setDepartments(result.updatedDepartments);
-    history.push(`/departmentDetails/${departmentId}`);
+
+    if (result.error) {
+      setError(result.error);
+    } else {
+      setEmployees(result.updatedEmployees);
+      setDepartments(result.updatedDepartments);
+      history.push(`/departmentDetails/${departmentId}`);
+    }
   };
 
   return (
@@ -135,6 +142,8 @@ const TeamForm = () => {
                 onChange={handleChange}
                 selectOnBlur={false}
               />}
+
+              {error && <Message info header={error} content="" />}
 
               <button className="ui primary button" onClick={handleSubmit}>
                 Save

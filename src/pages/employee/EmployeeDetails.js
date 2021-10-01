@@ -1,17 +1,18 @@
 import { Header, Grid, Icon, Table, Input } from "semantic-ui-react";
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { getCollection } from "../../helper/HelperApi";
+import { useEffect, useState, useContext } from "react";
+import { DepartmentsContext } from "../../context/DepartmentsContext";
 
 const EmployeeDetails = () => {
-  const [employees, setEmployees] = useState(null);
+  const [employeesData, setEmployees] = useState(null);
   const [searchResults, setSearchResults] = useState([]);
 
+  const { employees } = useContext(DepartmentsContext);
+
   useEffect(() => {
-    let collection = getCollection("employees");
-    setEmployees(collection);
-    setSearchResults(collection);
-  }, []);
+    setEmployees(employees);
+    setSearchResults(employees);
+  }, [employees]);
 
   /**
    * Personally I don't think this is the correct way to implement
@@ -20,7 +21,7 @@ const EmployeeDetails = () => {
    */
   const searchEmployee = (e, { value }) => {
     if (value) {
-      const newEmployeeList = employees.filter((employee) => {
+      const newEmployeeList = employeesData.filter((employee) => {
         return Object.values(employee)
           .join(" ")
           .toLowerCase()
@@ -28,7 +29,7 @@ const EmployeeDetails = () => {
       });
       setSearchResults(newEmployeeList);
     } else {
-      setSearchResults(employees);
+      setSearchResults(employeesData);
     }
   };
 
