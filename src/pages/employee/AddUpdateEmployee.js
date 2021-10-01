@@ -38,7 +38,6 @@ const AddUpdateEmployee = () => {
     let emp = employee;
     emp[e.target.name] = e.target.value;
     setEmployee(emp);
-    console.log(id);
   };
 
   const handleSubmit = () => {

@@ -54,7 +54,6 @@ const TeamForm = () => {
     const team = teamInfo;
     team[name] = value;
     setTeamInfo(team);
-    console.log(teamInfo);
     if (name === "teamLeader") {
       const filterEmployeesOptions = filterEmployees(
         employees,

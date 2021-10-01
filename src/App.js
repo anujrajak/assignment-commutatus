@@ -19,8 +19,8 @@ import TeamForm from "./pages/team/TeamForm";
 import TeamMemberForm from "./pages/team/TeamMemberForm";
 import ChangeTeam from "./pages/employee/ChangeTeam";
 
-
 import InfoTree from "./components/InfoTree";
+import ViewTeam from "./pages/team/ViewTeam";
 
 function App() {
   return (
@@ -66,6 +66,12 @@ function App() {
                   </Route>
                   <Route path="/changeTeam/:departmentId/:teamId/:employeeId">
                     <ChangeTeam />
+                  </Route>
+                  <Route path="/viewTeam/:departmentId/:teamId">
+                    <ViewTeam />
+                  </Route>
+                  <Route path="/">
+                    <EmployeeDetails />
                   </Route>
                 </Switch>
               </Grid.Column>

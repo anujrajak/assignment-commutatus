@@ -42,7 +42,6 @@ const TeamMemberForm = () => {
 
   const handleChange = (e, { name, value }) => {
     setNewMembers(value);
-    console.log(newMembers);
   };
 
   const handleSubmit = (e) => {

@@ -11,7 +11,6 @@ const EmployeeDetails = () => {
     let collection = getCollection("employees");
     setEmployees(collection);
     setSearchResults(collection);
-    console.log(collection);
   }, []);
 
   /**
