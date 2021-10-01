@@ -83,36 +83,4 @@ function App() {
   );
 }
 
-// const ListExampleTree = () => (
-//   <List>
-//     <List.Item>
-//       <List.Icon name="users" />
-//       <List.Content>
-//         <Link to="/employee">
-//           <List.Header>Employee Details</List.Header>
-//         </Link>
-//       </List.Content>
-//     </List.Item>
-//     <Divider />
-//     <List.Item>
-//       <List.Icon name="user" />
-//       <List.Content>
-//         <Link to="/departments">
-//           <List.Header>CEO</List.Header>
-//         </Link>
-//         <List.List>
-//           <List.Item>
-//             <List.Icon name="building" />
-//             <List.Content>
-//               <Link to="/departmentDetails/2">
-//                 <List.Header>Head of Engineering</List.Header>
-//               </Link>
-//             </List.Content>
-//           </List.Item>
-//         </List.List>
-//       </List.Content>
-//     </List.Item>
-//   </List>
-// );
-
 export default App;

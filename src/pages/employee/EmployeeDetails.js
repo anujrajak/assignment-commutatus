@@ -36,7 +36,7 @@ const EmployeeDetails = () => {
     <div>
       <Grid>
         <Grid.Column floated="left" width={13}>
-          <Header as="h3">Employee Details</Header>
+          <Header as="h3">Employees Details</Header>
           <p>Emplyee details and some more actions</p>
         </Grid.Column>
         <Grid.Column floated="right" width={3}>
